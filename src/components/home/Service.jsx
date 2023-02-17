@@ -129,6 +129,62 @@ export default function Service() {
               </HStack>
             </VStack>
           </GridItem>
+
+          {/* 2번째 */}
+          <GridItem
+            w="full"
+            bg="white"
+            rounded={"md"}
+            role="group"
+            _hover={{
+              bg: "rgba(0, 0, 0, 0.8)",
+              // backgroundImage:
+              //   "url(https://images.unsplash.com/photo-1676289238739-04bfd122bd8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80)",
+              // backgroundPosition: "center center",
+              // backgroundSize: "cover",
+            }}
+            // transition="0.4s"
+          >
+            <VStack
+              px="4"
+              pt="10"
+              pb="12"
+              w="full"
+              position="relative"
+              spacing="4"
+            >
+              <Box
+                rounded="full"
+                bg="gray.100"
+                _groupHover={{ bg: "white" }}
+                p="8"
+              >
+                <Two width={50} height={50} />
+              </Box>
+              <Text
+                fontWeight={600}
+                fontSize="22"
+                _groupHover={{ color: "white" }}
+              >
+                랜딩페이지 제작
+              </Text>
+              <HStack
+                bg="gray.100"
+                p="3"
+                rounded="lg"
+                position="absolute"
+                bottom="-16px"
+                _groupHover={{ bg: "red.500", color: "white", px: "28px" }}
+                cursor="pointer"
+              >
+                <Text display={"none"} _groupHover={{ display: "block" }}>
+                  자세히보기
+                </Text>
+                <HiOutlineArrowNarrowRight />
+                <Box _groupHover={{ mr: "-4px" }} />
+              </HStack>
+            </VStack>
+          </GridItem>
         </Grid>
       </VStack>
     </HStack>
