@@ -1,5 +1,6 @@
-import { Box, Button, Image, Text, VStack } from "@chakra-ui/react";
+import { Box, Image, Text, VStack } from "@chakra-ui/react";
 import TypeIt from "typeit-react";
+import ButtonSlide from "../ButtonSlide";
 
 export default function MainSlide() {
   return (
@@ -91,9 +92,7 @@ export default function MainSlide() {
         </VStack>
         <Box />
         <Box px="8">
-          <Button colorScheme={"red"} variant="outline">
-            빠른견적문의
-          </Button>
+          <ButtonSlide text="빠른견적문의" />
         </Box>
       </VStack>
     </Box>

@@ -1,12 +1,5 @@
-import {
-  Box,
-  Button,
-  Grid,
-  GridItem,
-  HStack,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Grid, GridItem, HStack, Text, VStack } from "@chakra-ui/react";
+import ButtonSlide from "../ButtonSlide";
 
 export default function About() {
   return (
@@ -62,8 +55,8 @@ export default function About() {
             </VStack>
             <Box borderLeft="4px" borderColor="red.500" px="4" py="2">
               <Text fontWeight={600} fontSize="20">
-                Capitalise on low hanging fruit to identify a ballpark value
-                added activity to beta test.
+                아이캔은 수년간의 경험과 노하우로 안정된 운영과 고객중심의
+                서비스로 진행할 것을 약속드립니다.
               </Text>
             </Box>
             <Text>
@@ -71,9 +64,7 @@ export default function About() {
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
             </Text>
-            <Button colorScheme={"red"} variant="outline">
-              빠른 상담 문의
-            </Button>
+            <ButtonSlide text="빠른견적문의" />
           </VStack>
         </GridItem>
       </Grid>
