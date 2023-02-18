@@ -31,15 +31,33 @@ export default function Community() {
   };
 
   return (
-    <HStack justifyContent={"center"} py="32" bg="yellow.400">
-      <VStack w="7xl" alignItems={"flex-start"} px={4} spacing="16">
+    <HStack
+      justifyContent={"center"}
+      py="32"
+      bgAttachment={"fixed"}
+      position="relative"
+      bgImage={
+        "url('https://images.unsplash.com/photo-1676412952691-5e4a229485a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80')"
+      }
+    >
+      <Box
+        position="absolute"
+        w="full"
+        h="full"
+        top="0"
+        left="0"
+        bgGradient={"linear(to-r, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4))"}
+      />
+      <VStack w="7xl" alignItems={"flex-start"} px={4} spacing="16" zIndex={9}>
         <VStack
           alignItems={{ sm: "center", lg: "flex-start" }}
           spacing="0"
           w="full"
         >
-          <Text fontSize={20}>최신소식을 전해 드립니다.</Text>
-          <Text fontWeight={900} fontSize={52}>
+          <Text color="white" fontSize={20}>
+            최신소식을 전해 드립니다.
+          </Text>
+          <Text color="white" fontWeight={900} fontSize={52}>
             커뮤니티
           </Text>
         </VStack>

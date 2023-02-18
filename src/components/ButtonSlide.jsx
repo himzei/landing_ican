@@ -1,10 +1,11 @@
 import { Box, HStack, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
-export default function ButtonSlide({ text, linking }) {
+export default function ButtonSlide({ text, linking, buttonFontSize = "14" }) {
   return (
     <Link to={linking}>
       <HStack
+        width="100%"
         border="1px"
         _hover={{ borderColor: "transparent" }}
         borderColor="red.300"
@@ -28,8 +29,10 @@ export default function ButtonSlide({ text, linking }) {
           _groupHover={{ width: "100%" }}
         />
         <Text
+          w="full"
+          align="center"
           color="red.500"
-          fontSize="14"
+          fontSize={buttonFontSize}
           zIndex={9}
           transition="0.1s"
           _groupHover={{ color: "white" }}

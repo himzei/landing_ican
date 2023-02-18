@@ -19,8 +19,16 @@ import Logo from "../assets/png/logo.png";
 import { AiOutlineMenu, AiOutlineClose, AiOutlineLogin } from "react-icons/ai";
 import { FaRegAddressBook } from "react-icons/fa";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 
 export default function Header() {
+  const menuList = [
+    { name: "업체소개", link: "/login" },
+    { name: "서비스안내", link: "#" },
+    { name: "포트폴리오", link: "#" },
+    { name: "커뮤니티", link: "#" },
+    { name: "고객센터", link: "#" },
+  ];
   const [scroll, setScroll] = useState(true);
 
   useEffect(() => {
@@ -50,48 +58,28 @@ export default function Header() {
       >
         <HStack justifyContent={"space-between"} w="7xl" h="full" px="2">
           <Box h="full" p="4">
-            <Image h="full" src={Logo} />
+            <Link to="/">
+              <Image h="full" src={Logo} />
+            </Link>
           </Box>
           <HStack spacing={8} transition="0.4s">
             <HStack spacing={5} display={{ base: "none", lg: "block" }}>
-              <Button
-                variant="ghost"
-                _hover={{ color: "red.500" }}
-                _focus={{ color: "red.500" }}
-              >
-                업체소개
-              </Button>
-              <Button
-                variant="ghost"
-                _hover={{ color: "red.500" }}
-                _focus={{ color: "red.500" }}
-              >
-                서비스안내
-              </Button>
-              <Button
-                variant="ghost"
-                _hover={{ color: "red.500" }}
-                _focus={{ color: "red.500" }}
-              >
-                포트폴리오
-              </Button>
-              <Button
-                variant="ghost"
-                _hover={{ color: "red.500" }}
-                _focus={{ color: "red.500" }}
-              >
-                커뮤니티
-              </Button>
-              <Button
-                variant="ghost"
-                _hover={{ color: "red.500" }}
-                _focus={{ color: "red.500" }}
-              >
-                고객센터
-              </Button>
+              {menuList.map((_, i) => (
+                <Link to={menuList[i].link} key={i}>
+                  <Button
+                    variant="ghost"
+                    _hover={{ color: "red.500" }}
+                    _focus={{ color: "red.500" }}
+                  >
+                    {menuList[i].name}
+                  </Button>
+                </Link>
+              ))}
             </HStack>
             <HStack spacing={5}>
-              <Button colorScheme={"red"}>프로젝트 문의 </Button>
+              <Link to="/">
+                <Button colorScheme={"red"}>프로젝트 문의 </Button>
+              </Link>
               <Box p="2" cursor={"pointer"} ref={btnRef} onClick={onOpen}>
                 <AiOutlineMenu size="20px" />
               </Box>
@@ -121,8 +109,10 @@ export default function Header() {
             margin="auto"
             justifyContent="space-between"
           >
-            <Box p="4">
-              <Image w="70px" src={Logo} />
+            <Box p="4" onClick={onClose}>
+              <Link to={"/"}>
+                <Image w="70px" src={Logo} />
+              </Link>
             </Box>
             <HStack spacing={4}>
               <Button colorScheme={"red"}>프로젝트 문의 </Button>
@@ -158,57 +148,22 @@ export default function Header() {
                   alignItems={"flex-start"}
                   justifyContent="space-between"
                   spacing={8}
+                  onClick={onClose}
                 >
-                  <Text
-                    fontSize={{
-                      sm: "20px",
-                      md: "20px",
-                      lg: "48px",
-                    }}
-                    fontWeight={600}
-                  >
-                    프로젝트 문의
-                  </Text>
-                  <Text
-                    fontSize={{
-                      sm: "20px",
-                      md: "20px",
-                      lg: "48px",
-                    }}
-                    fontWeight={600}
-                  >
-                    프로젝트 문의
-                  </Text>
-                  <Text
-                    fontSize={{
-                      sm: "20px",
-                      md: "20px",
-                      lg: "48px",
-                    }}
-                    fontWeight={600}
-                  >
-                    프로젝트 문의
-                  </Text>
-                  <Text
-                    fontSize={{
-                      sm: "20px",
-                      md: "20px",
-                      lg: "48px",
-                    }}
-                    fontWeight={600}
-                  >
-                    프로젝트 문의
-                  </Text>
-                  <Text
-                    fontSize={{
-                      sm: "20px",
-                      md: "20px",
-                      lg: "48px",
-                    }}
-                    fontWeight={600}
-                  >
-                    프로젝트 문의
-                  </Text>
+                  {menuList.map((_, i) => (
+                    <Link key={i} to={menuList[i].link}>
+                      <Text
+                        fontSize={{
+                          sm: "20px",
+                          md: "20px",
+                          lg: "48px",
+                        }}
+                        fontWeight={600}
+                      >
+                        {menuList[i].name}
+                      </Text>
+                    </Link>
+                  ))}
                 </VStack>
               </GridItem>
               <GridItem h="80%" w="full" margin="auto">
@@ -219,30 +174,36 @@ export default function Header() {
                   h="full"
                 >
                   <VStack>
-                    <HStack
-                      border="1px"
-                      borderColor="white"
-                      rounded="sm"
-                      py="2"
-                      px="4"
-                      w="200px"
-                      justifyContent={"space-between"}
-                    >
-                      <Text>로그인</Text>
-                      <AiOutlineLogin />
-                    </HStack>
-                    <HStack
-                      border="1px"
-                      borderColor="white"
-                      rounded="sm"
-                      py="2"
-                      px="4"
-                      w="200px"
-                      justifyContent={"space-between"}
-                    >
-                      <Text>회원가입</Text>
-                      <FaRegAddressBook />
-                    </HStack>
+                    <Link to="/login">
+                      <HStack
+                        onClick={onClose}
+                        border="1px"
+                        borderColor="white"
+                        rounded="sm"
+                        py="2"
+                        px="4"
+                        w="200px"
+                        justifyContent={"space-between"}
+                      >
+                        <Text>로그인</Text>
+                        <AiOutlineLogin />
+                      </HStack>
+                    </Link>
+                    <Link to="/signup">
+                      <HStack
+                        onClick={onClose}
+                        border="1px"
+                        borderColor="white"
+                        rounded="sm"
+                        py="2"
+                        px="4"
+                        w="200px"
+                        justifyContent={"space-between"}
+                      >
+                        <Text>회원가입</Text>
+                        <FaRegAddressBook />
+                      </HStack>
+                    </Link>
                   </VStack>
                   <VStack
                     display={{ sm: "none", lg: "block" }}

@@ -17,8 +17,8 @@ export default function PortfolioItem({
   contents,
 }) {
   return (
-    <Box w="full">
-      <Grid templateColumns={"3fr 4fr"} gap={8}>
+    <Box w={"full"}>
+      <Grid templateColumns={{ sm: "repeat(1, 1fr)", lg: "3fr 4fr" }} gap={8}>
         <GridItem w="full" h="340px">
           <Box w="full" h="full" rounded="lg" overflow={"hidden"}>
             <Image

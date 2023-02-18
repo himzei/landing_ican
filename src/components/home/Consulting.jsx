@@ -27,6 +27,7 @@ import {
 import { useState } from "react";
 import { AiFillPhone, AiTwotoneMail } from "react-icons/ai";
 import { BsFillPersonFill } from "react-icons/bs";
+import ButtonSlide from "../ButtonSlide";
 import ServiceCategories from "../ServiceCategories";
 
 export default function Consulting() {
@@ -160,9 +161,10 @@ export default function Consulting() {
             <Text fontSize="14">내용보기</Text>
           </Button>
         </HStack>
-        <Button size="lg" w="full" colorScheme={"red"}>
-          제출하기
-        </Button>
+        <Box w="full">
+          <ButtonSlide text="제출하기" buttonFontSize="16" />
+        </Box>
+
         <Modal isCentered isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>

@@ -4,7 +4,11 @@ import PortfolioItem from "../PortfolioItem";
 export default function Portfolio() {
   return (
     <VStack w="full" alignItems={"center"} py="32">
-      <VStack w="7xl" alignItems={"flex-start"} spacing="8">
+      <VStack
+        w={{ sm: "lg", md: "3xl", lg: "7xl" }}
+        alignItems={"flex-start"}
+        spacing="8"
+      >
         <PortfolioItem
           imgUrl="https://images.unsplash.com/photo-1676412952691-5e4a229485a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80"
           title="출입통제 서비스"
