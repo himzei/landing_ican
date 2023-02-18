@@ -21,13 +21,15 @@ import { FaRegAddressBook } from "react-icons/fa";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 
+import { Link as LinkScroll } from "react-scroll";
+
 export default function Header() {
   const menuList = [
-    { name: "업체소개", link: "/login" },
-    { name: "서비스안내", link: "#" },
-    { name: "포트폴리오", link: "#" },
-    { name: "커뮤니티", link: "#" },
-    { name: "고객센터", link: "#" },
+    { name: "업체소개", link: "test1" },
+    { name: "서비스안내", link: "test2" },
+    { name: "포트폴리오", link: "test3" },
+    { name: "커뮤니티", link: "test4" },
+    { name: "고객센터", link: "test6" },
   ];
   const [scroll, setScroll] = useState(true);
 
@@ -65,7 +67,15 @@ export default function Header() {
           <HStack spacing={8} transition="0.4s">
             <HStack spacing={5} display={{ base: "none", lg: "block" }}>
               {menuList.map((_, i) => (
-                <Link to={menuList[i].link} key={i}>
+                <LinkScroll
+                  key={i}
+                  spy={true}
+                  smooth={true}
+                  duration={500}
+                  activeClass="active"
+                  className={menuList[i].link}
+                  to={menuList[i].link}
+                >
                   <Button
                     variant="ghost"
                     _hover={{ color: "red.500" }}
@@ -73,7 +83,7 @@ export default function Header() {
                   >
                     {menuList[i].name}
                   </Button>
-                </Link>
+                </LinkScroll>
               ))}
             </HStack>
             <HStack spacing={5}>
@@ -151,8 +161,18 @@ export default function Header() {
                   onClick={onClose}
                 >
                   {menuList.map((_, i) => (
-                    <Link key={i} to={menuList[i].link}>
+                    <LinkScroll
+                      key={i}
+                      spy={true}
+                      smooth={true}
+                      duration={500}
+                      activeClass="active"
+                      className={menuList[i].link}
+                      to={menuList[i].link}
+                      onClick={onClose}
+                    >
                       <Text
+                        cursor="pointer"
                         fontSize={{
                           sm: "20px",
                           md: "20px",
@@ -162,7 +182,7 @@ export default function Header() {
                       >
                         {menuList[i].name}
                       </Text>
-                    </Link>
+                    </LinkScroll>
                   ))}
                 </VStack>
               </GridItem>

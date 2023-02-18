@@ -4,6 +4,7 @@ import Consulting from "../components/home/Consulting";
 import MainSlide from "../components/home/MainSlide";
 import Portfolio from "../components/home/Portfolio";
 import Service from "../components/home/Service";
+import { Element } from "react-scroll";
 
 export default function Home() {
   return (
@@ -12,19 +13,29 @@ export default function Home() {
       <MainSlide />
 
       {/* About */}
-      <About />
+      <Element name="test1" className="test1">
+        <About />
+      </Element>
 
       {/* Service */}
-      <Service />
+      <Element name="test2" className="test2">
+        <Service />
+      </Element>
 
       {/* 포트폴리오 */}
-      <Portfolio />
+      <Element name="test3" className="test3">
+        <Portfolio />
+      </Element>
 
       {/* Community */}
-      <Community />
+      <Element name="test4" className="test4">
+        <Community />
+      </Element>
 
       {/* 컨설팅 */}
-      <Consulting />
+      <Element name="test6" className="test6">
+        <Consulting />
+      </Element>
 
       {/* 공백 */}
     </>
