@@ -31,9 +31,13 @@ export default function Community() {
   };
 
   return (
-    <HStack justifyContent={"center"} py="32">
+    <HStack justifyContent={"center"} py="32" bg="yellow.400">
       <VStack w="7xl" alignItems={"flex-start"} px={4} spacing="16">
-        <VStack alignItems={"flex-start"} spacing="0" w="full">
+        <VStack
+          alignItems={{ sm: "center", lg: "flex-start" }}
+          spacing="0"
+          w="full"
+        >
           <Text fontSize={20}>최신소식을 전해 드립니다.</Text>
           <Text fontWeight={900} fontSize={52}>
             커뮤니티

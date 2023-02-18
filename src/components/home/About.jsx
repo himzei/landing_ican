@@ -55,7 +55,7 @@ export default function About() {
             </VStack>
             <Box borderLeft="4px" borderColor="red.500" px="4" py="2">
               <Text fontWeight={600} fontSize="20">
-                아이캔은 수년간의 경험과 노하우로 안정된 운영과 고객중심의
+                아이캔은 수년간의 경험과 노하우로 안정된 행사운영과 고객중심의
                 서비스로 진행할 것을 약속드립니다.
               </Text>
             </Box>
