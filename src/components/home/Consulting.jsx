@@ -23,16 +23,29 @@ import {
   ModalFooter,
   useDisclosure,
   useCheckboxGroup,
+  useToast,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiFillPhone, AiTwotoneMail } from "react-icons/ai";
 import { BsFillPersonFill } from "react-icons/bs";
-import ButtonSlide from "../ButtonSlide";
 import ServiceCategories from "../ServiceCategories";
+import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
+import { handleConsulting } from "../../api.js";
 
 export default function Consulting() {
+  const toast = useToast();
+  const {
+    handleSubmit,
+    register,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm({ mode: "onChange" });
+
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [checked, setChecked] = useState();
+  const [checked, setChecked] = useState([]);
+
   const options = [
     "출입통제 키오스크",
     "랜딩페이지 제작",
@@ -47,6 +60,24 @@ export default function Consulting() {
   const { getCheckboxProps } = useCheckboxGroup({
     onChange: setChecked,
   });
+
+  useEffect(() => {
+    setChecked([]);
+  }, [reset]);
+
+  const mutation = useMutation(handleConsulting, {
+    onSuccess: () => {
+      toast({
+        title: "작성하신 상담신청을 전달하였습니다.",
+        status: "success",
+      });
+      reset();
+    },
+  });
+
+  const onSubmit = ({ name, tel, email, message }) => {
+    mutation.mutate({ name, email, tel, message, category: checked });
+  };
 
   return (
     <VStack w="full" alignItems={"center"} spacing="16" py="32">
@@ -81,7 +112,7 @@ export default function Consulting() {
           </Text>
         </VStack>
       </Box>
-      <VStack as="form" w="md" spacing={8}>
+      <VStack as="form" w="md" spacing={8} onSubmit={handleSubmit(onSubmit)}>
         <FormControl isRequired>
           <FormLabel>이름</FormLabel>
           <InputGroup>
@@ -89,12 +120,24 @@ export default function Consulting() {
               pointerEvents="none"
               children={<BsFillPersonFill color="lightgray" />}
             />
+
             <Input
               type="text"
-              name="name"
+              {...register("name", {
+                required: "이름/회사명은 필수 입력값입니다.",
+                minLength: {
+                  value: 2,
+                  message: "이름/회사명의 최소 입력값은 2자 이상입니다.",
+                },
+              })}
               placeholder="이름 또는 회사명을 입력해 주세요."
             />
           </InputGroup>
+          {errors.name && (
+            <Text color="red.500" fontSize="14" fontWeight={600}>
+              {errors.name.message}
+            </Text>
+          )}
         </FormControl>
         <FormControl isRequired>
           <FormLabel>연락처</FormLabel>
@@ -106,9 +149,17 @@ export default function Consulting() {
             <Input
               name="tel"
               type="tel"
+              {...register("tel", {
+                required: "연락처는 필수 입력입니다.",
+              })}
               placeholder="휴대폰 번호를 '-' 없이 입력해 주세요."
             />
           </InputGroup>
+          {errors.tel && (
+            <Text color="red.500" fontSize="14" fontWeight={600}>
+              {errors.tel.message}
+            </Text>
+          )}
         </FormControl>
         <FormControl isRequired>
           <FormLabel>이메일</FormLabel>
@@ -117,8 +168,23 @@ export default function Consulting() {
               pointerEvents="none"
               children={<AiTwotoneMail color="lightgray" />}
             />
-            <Input type="email" placeholder="이메일 주소를 입력해 주세요." />
+            <Input
+              type="email"
+              {...register("email", {
+                required: "이메일은 필수 입력입니다.",
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: "이메일 형식에 맞지 않습니다.",
+                },
+              })}
+              placeholder="이메일 주소를 입력해 주세요."
+            />
           </InputGroup>
+          {errors.email && (
+            <Text color="red.500" fontSize="14" fontWeight={600}>
+              {errors.email.message}
+            </Text>
+          )}
         </FormControl>
         <FormControl>
           <FormLabel>서비스유형</FormLabel>
@@ -136,12 +202,13 @@ export default function Consulting() {
             })}
           </Grid>
         </FormControl>
+
         <FormControl>
           <FormLabel>문의사항</FormLabel>
           <Textarea
-            name="message"
+            {...register("message")}
             placeholder="문의사항을 남겨주시면 더 빠른 상담이 가능합니다."
-            size="sm"
+            rows="8"
           />
         </FormControl>
         <HStack
@@ -151,7 +218,7 @@ export default function Consulting() {
           borderColor="gray.200"
           justifyContent={"space-between"}
         >
-          <Checkbox colorScheme={"red"}>
+          <Checkbox colorScheme={"red"} {...register("confirm")}>
             <Text fontSize="14">
               개인정보취급방침을 읽었으며, 이에 동의합니다.
             </Text>
@@ -161,8 +228,17 @@ export default function Consulting() {
             <Text fontSize="14">내용보기</Text>
           </Button>
         </HStack>
+
         <Box w="full">
-          <ButtonSlide text="제출하기" buttonFontSize="16" />
+          <Button
+            isDisabled={!watch("confirm")}
+            type="submit"
+            w="full"
+            colorScheme={"red"}
+          >
+            제출하기
+          </Button>
+          {/* <ButtonSlide text="제출하기" buttonFontSize="16" /> */}
         </Box>
 
         <Modal isCentered isOpen={isOpen} onClose={onClose}>

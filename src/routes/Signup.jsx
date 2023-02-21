@@ -10,38 +10,35 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
 import { FaUser, FaLock } from "react-icons/fa";
-import { useMutation } from "react-query";
+import { MdEmail } from "react-icons/md";
 import { Link, useLocation } from "react-router-dom";
-import { usernameLogin } from "../api";
-
 import SocialLogin from "../components/SocialLogin";
+import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
+import { usernameSignUp } from "../api";
 
-export default function Login() {
+export default function Signup() {
   const toast = useToast();
   const {
-    reset,
-    register,
     handleSubmit,
+    register,
+    reset,
     formState: { errors },
   } = useForm();
 
-  const mutation = useMutation(usernameLogin, {
-    onError: (err, context) => {
-      console.log(err, context);
-    },
+  const mutation = useMutation(usernameSignUp, {
     onSuccess: () => {
       toast({
-        title: "환영합니다",
+        title: "회원가입을 축하합니다.",
         status: "success",
       });
       reset();
     },
   });
 
-  const onSubmit = ({ email, password }) => {
-    mutation.mutate({ email, password });
+  const onSubmit = ({ username, email, password, password2 }) => {
+    mutation.mutate({ username, email, password, password2 });
   };
 
   const { pathname } = useLocation();
@@ -50,7 +47,13 @@ export default function Login() {
   }, [pathname]);
 
   return (
-    <VStack w="full" justifyContent={"center"} h={"100vh"} bg="gray.100">
+    <VStack
+      w="full"
+      justifyContent={"center"}
+      h={"100vh"}
+      bg="gray.100"
+      spacing={4}
+    >
       <VStack w="md" bg="white" p="4" rounded="xl" spacing={6}>
         <Box w="full" h="100px" position="relative">
           <VStack
@@ -60,21 +63,21 @@ export default function Login() {
             spacing="0"
           >
             <Text fontSize={24} fontWeight={900} color="gray.500">
-              로그인
+              회원가입
             </Text>
             <Text fontSize="16" color="gray.500">
-              Login to your account
+              Signup to your account
             </Text>
             <HStack spacing="2" fontSize="14" color="gray.500">
-              <Text>회원아이디가 없으시다면</Text>
-              <Link to="/signup">
-                <Text color="red.500">회원가입</Text>
+              <Text>이미 회원이시라면</Text>
+              <Link to="/login">
+                <Text color="red.500">로그인</Text>
               </Link>
             </HStack>
           </VStack>
         </Box>
 
-        {/* Form Login */}
+        {/* as Form */}
         <VStack
           as="form"
           w="full"
@@ -90,13 +93,34 @@ export default function Login() {
               }
             />
             <Input
-              {...register("email", {
-                required: "이메일을 입력해 주세요",
-              })}
-              isInvalid={Boolean(errors.email?.message)}
               type="text"
+              {...register("username", {
+                required: "아이디를 입력해주세요",
+                minLength: {
+                  message: "아이디는 6자 이상 작성하셔야 합니다. ",
+                  value: 5,
+                },
+              })}
+              variant={"filled"}
+              placeholder="아이디"
+            />
+          </InputGroup>
+
+          <InputGroup>
+            <InputLeftElement
+              children={
+                <Box color={"gray.400"}>
+                  <MdEmail />
+                </Box>
+              }
+            />
+            <Input
+              type="email"
               variant={"filled"}
               placeholder="이메일"
+              {...register("email", {
+                required: "이메일을 입력해주세요",
+              })}
             />
           </InputGroup>
           <InputGroup>
@@ -108,19 +132,40 @@ export default function Login() {
               }
             />
             <Input
-              {...register("password")}
-              isInvalid={Boolean(errors.password?.message)}
               type="password"
               variant={"filled"}
               placeholder="비밀번호"
+              {...register("password")}
             />
           </InputGroup>
+          <InputGroup>
+            <InputLeftElement children={<Box color={"gray.400"}></Box>} />
+            <Input
+              type="password"
+              variant={"filled"}
+              placeholder="비밀번호 확인"
+              {...register("password2")}
+            />
+          </InputGroup>
+          {/* <Button type="submit" colorScheme={"red}"} variant="ghost">
+            제출하기
+          </Button> */}
           <Box w="full">
-            <Button type="submit" w="full" colorScheme={"red"}>
-              로그인
+            <Button
+              w="full"
+              type="submit"
+              colorScheme={"red"}
+              variant="outline"
+            >
+              전송하기
             </Button>
-            {/* <ButtonSlide text="로그인" buttonFontSize="16" /> */}
+            {/* <ButtonSlide text="회원가입" buttonFontSize="16" type="submit" /> */}
           </Box>
+          {errors.errors?.message ? (
+            <Text fontSize="14" color="red.500">
+              {errors.errors?.message}
+            </Text>
+          ) : null}
         </VStack>
 
         <Box w="full" h="1px" bg="gray.100" position="relative">

@@ -7,35 +7,59 @@ import Service from "../components/home/Service";
 import { Element } from "react-scroll";
 
 export default function Home() {
+  const socket = new WebSocket(`ws://localhost:4000`);
+
+  socket.addEventListener("open", () => {
+    console.log("채팅이 연결되었습니다.");
+  });
+
+  socket.addEventListener("message", (message) => {
+    console.log("just got this: ", message.data, "from this server");
+  });
+
+  socket.addEventListener("close", () => {
+    console.log("접속종료");
+  });
+
   return (
     <>
       {/* 메인 슬라이드 */}
       <MainSlide />
 
       {/* About */}
-      <Element name="test1" className="test1">
-        <About />
-      </Element>
+      <div id="1">
+        <Element name="test1" className="test1">
+          <About />
+        </Element>
+      </div>
 
       {/* Service */}
-      <Element name="test2" className="test2">
-        <Service />
-      </Element>
+      <div id="2">
+        <Element name="test2" className="test2">
+          <Service />
+        </Element>
+      </div>
 
       {/* 포트폴리오 */}
-      <Element name="test3" className="test3">
-        <Portfolio />
-      </Element>
+      <div id="3">
+        <Element name="test3" className="test3" id="3">
+          <Portfolio />
+        </Element>
+      </div>
 
       {/* Community */}
-      <Element name="test4" className="test4">
-        <Community />
-      </Element>
+      <div id="4">
+        <Element name="test4" className="test4" id="4">
+          <Community />
+        </Element>
+      </div>
 
       {/* 컨설팅 */}
-      <Element name="test6" className="test6">
-        <Consulting />
-      </Element>
+      <div id="six">
+        <Element name="test6" className="test6" id="6">
+          <Consulting />
+        </Element>
+      </div>
 
       {/* 공백 */}
     </>

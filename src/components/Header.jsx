@@ -14,24 +14,33 @@ import {
   GridItem,
   VStack,
   Text,
+  Avatar,
 } from "@chakra-ui/react";
 import Logo from "../assets/png/logo.png";
-import { AiOutlineMenu, AiOutlineClose, AiOutlineLogin } from "react-icons/ai";
+import {
+  AiOutlineMenu,
+  AiOutlineClose,
+  AiOutlineLogin,
+  AiFillSetting,
+  AiOutlineLogout,
+} from "react-icons/ai";
 import { FaRegAddressBook } from "react-icons/fa";
+import { GoPerson } from "react-icons/go";
+import { RiMessage2Fill } from "react-icons/ri";
 import { useRef } from "react";
-import { Link } from "react-router-dom";
-
+import { Link, useLocation } from "react-router-dom";
 import { Link as LinkScroll } from "react-scroll";
 
 export default function Header() {
   const menuList = [
-    { name: "업체소개", link: "test1" },
-    { name: "서비스안내", link: "test2" },
-    { name: "포트폴리오", link: "test3" },
-    { name: "커뮤니티", link: "test4" },
-    { name: "고객센터", link: "test6" },
+    { name: "업체소개", link: "test1", link2: "/#1" },
+    { name: "서비스안내", link: "test2", link2: "/#2" },
+    { name: "포트폴리오", link: "test3", link2: "/#3" },
+    { name: "커뮤니티", link: "test4", link2: "/#4" },
+    { name: "고객센터", link: "test6", link2: "/#6" },
   ];
   const [scroll, setScroll] = useState(true);
+  const { pathname } = useLocation();
 
   useEffect(() => {
     document.addEventListener("wheel", (event) => {
@@ -66,25 +75,37 @@ export default function Header() {
           </Box>
           <HStack spacing={8} transition="0.4s">
             <HStack spacing={5} display={{ base: "none", lg: "block" }}>
-              {menuList.map((_, i) => (
-                <LinkScroll
-                  key={i}
-                  spy={true}
-                  smooth={true}
-                  duration={500}
-                  activeClass="active"
-                  className={menuList[i].link}
-                  to={menuList[i].link}
-                >
-                  <Button
-                    variant="ghost"
-                    _hover={{ color: "red.500" }}
-                    _focus={{ color: "red.500" }}
+              {menuList.map((_, i) =>
+                pathname === "/" ? (
+                  <LinkScroll
+                    key={i}
+                    spy={true}
+                    smooth={true}
+                    duration={500}
+                    activeClass="active"
+                    className={menuList[i].link}
+                    to={menuList[i].link}
                   >
-                    {menuList[i].name}
-                  </Button>
-                </LinkScroll>
-              ))}
+                    <Button
+                      variant="ghost"
+                      _hover={{ color: "red.500" }}
+                      _focus={{ color: "red.500" }}
+                    >
+                      {menuList[i].name}
+                    </Button>
+                  </LinkScroll>
+                ) : (
+                  <a href={menuList[i].link2}>
+                    <Button
+                      variant="ghost"
+                      _hover={{ color: "red.500" }}
+                      _focus={{ color: "red.500" }}
+                    >
+                      {menuList[i].name}
+                    </Button>
+                  </a>
+                )
+              )}
             </HStack>
             <HStack spacing={5}>
               <Link to="/">
@@ -160,30 +181,46 @@ export default function Header() {
                   spacing={8}
                   onClick={onClose}
                 >
-                  {menuList.map((_, i) => (
-                    <LinkScroll
-                      key={i}
-                      spy={true}
-                      smooth={true}
-                      duration={500}
-                      activeClass="active"
-                      className={menuList[i].link}
-                      to={menuList[i].link}
-                      onClick={onClose}
-                    >
-                      <Text
-                        cursor="pointer"
-                        fontSize={{
-                          sm: "20px",
-                          md: "20px",
-                          lg: "48px",
-                        }}
-                        fontWeight={600}
+                  {menuList.map((_, i) =>
+                    pathname === "/" ? (
+                      <LinkScroll
+                        key={i}
+                        spy={true}
+                        smooth={true}
+                        duration={500}
+                        activeClass="active"
+                        className={menuList[i].link}
+                        to={menuList[i].link}
+                        onClick={onClose}
                       >
-                        {menuList[i].name}
-                      </Text>
-                    </LinkScroll>
-                  ))}
+                        <Text
+                          cursor="pointer"
+                          fontSize={{
+                            sm: "20px",
+                            md: "20px",
+                            lg: "48px",
+                          }}
+                          fontWeight={600}
+                        >
+                          {menuList[i].name}
+                        </Text>
+                      </LinkScroll>
+                    ) : (
+                      <a href={menuList[i].link2}>
+                        <Text
+                          cursor="pointer"
+                          fontSize={{
+                            sm: "20px",
+                            md: "20px",
+                            lg: "48px",
+                          }}
+                          fontWeight={600}
+                        >
+                          {menuList[i].name}
+                        </Text>
+                      </a>
+                    )
+                  )}
                 </VStack>
               </GridItem>
               <GridItem h="80%" w="full" margin="auto">
@@ -224,6 +261,40 @@ export default function Header() {
                         <FaRegAddressBook />
                       </HStack>
                     </Link>
+
+                    {/* 로그인 했을 때 메뉴 */}
+                    <VStack
+                      w="200px"
+                      p="4"
+                      border="1px"
+                      alignItems={"flex-start"}
+                      spacing="4"
+                    >
+                      <HStack spacing={4}>
+                        <Link to="/profile">
+                          <Avatar
+                            cursor={"pointer"}
+                            size="md"
+                            onClick={onClose}
+                          />
+                        </Link>
+                        <VStack alignItems={"flex-start"} spacing="0">
+                          <Text color="gray.300" fontSize="14">
+                            Hello~!
+                          </Text>
+                          <Text color="gray.300" fontSize="14" fontWeight={600}>
+                            himzei
+                          </Text>
+                        </VStack>
+                      </HStack>
+
+                      <HStack spacing={4}>
+                        <GoPerson color="gray" size="20" />
+                        <RiMessage2Fill color="gray" size="20" />
+                        <AiFillSetting color="gray" size="20" />
+                        <AiOutlineLogout color="gray" size="20" />
+                      </HStack>
+                    </VStack>
                   </VStack>
                   <VStack
                     display={{ sm: "none", lg: "block" }}
