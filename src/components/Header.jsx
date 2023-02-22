@@ -15,6 +15,7 @@ import {
   VStack,
   Text,
   Avatar,
+  useToast,
 } from "@chakra-ui/react";
 import Logo from "../assets/png/logo.png";
 import {
@@ -28,12 +29,13 @@ import { FaRegAddressBook } from "react-icons/fa";
 import { GoPerson } from "react-icons/go";
 import { RiMessage2Fill } from "react-icons/ri";
 import { useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Link as LinkScroll } from "react-scroll";
 import useUser from "../lib/useUser";
-import { refreshToken } from "../api";
+import { logout, refreshToken } from "../api";
 
 export default function Header() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { userLoading, isLoggedIn, user } = useUser();
   console.log(userLoading, isLoggedIn, user);
   const menuList = [
@@ -47,10 +49,8 @@ export default function Header() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      refreshToken();
-    }
-  }, [isLoggedIn]);
+    refreshToken();
+  }, []);
 
   useEffect(() => {
     document.addEventListener("wheel", (event) => {
@@ -62,8 +62,28 @@ export default function Header() {
     });
   });
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
+
+  const toast = useToast();
+  const navigate = useNavigate();
+
+  const onLogout = async () => {
+    const toastId = toast({
+      title: "로그아웃 중입니다",
+      status: "loading",
+    });
+    const data = await logout();
+    console.log(data);
+    setTimeout(() => {
+      toast.update(toastId, {
+        status: "success",
+        title: "로그아웃!",
+        description: "다음에 또 만나요!",
+      });
+    }, 5000);
+    navigate("/");
+    onClose();
+  };
 
   return (
     <>
@@ -242,13 +262,7 @@ export default function Header() {
                   h="full"
                 >
                   {isLoggedIn ? (
-                    <VStack
-                      w="200px"
-                      p="4"
-                      border="1px"
-                      alignItems={"flex-start"}
-                      spacing="4"
-                    >
+                    <VStack w="200px" alignItems={"flex-start"} spacing="4">
                       <HStack spacing={4}>
                         <Link to="/profile">
                           <Avatar
@@ -267,13 +281,21 @@ export default function Header() {
                         </VStack>
                       </HStack>
 
-                      <HStack spacing={4}>
-                        <GoPerson color="gray" size="20" />
-                        <Link to="/chat">
-                          <RiMessage2Fill color="gray" size="20" />
-                        </Link>
-                        <AiFillSetting color="gray" size="20" />
-                        <AiOutlineLogout color="gray" size="20" />
+                      <HStack spacing={2}>
+                        <Button p="0" variant={"ghost"}>
+                          <GoPerson color="gray" size="20" />
+                        </Button>
+                        <Button p="0" variant={"ghost"}>
+                          <Link to="/chat">
+                            <RiMessage2Fill color="gray" size="20" />
+                          </Link>
+                        </Button>
+                        <Button p="0" variant="ghost">
+                          <AiFillSetting color="gray" size="20" />
+                        </Button>
+                        <Button p="0" variant="ghost" onClick={onLogout}>
+                          <AiOutlineLogout color="gray" size="20" />
+                        </Button>
                       </HStack>
                     </VStack>
                   ) : (

@@ -60,6 +60,9 @@ export async function usernameLogin({ email, password }) {
 export async function accessToken() {
   return await fetch(`${BASE_PATH}/users/accessToken`, {
     method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
     credentials: "include",
   }).then((response) => response.json());
 }
@@ -67,6 +70,9 @@ export async function accessToken() {
 export async function refreshToken() {
   return await fetch(`${BASE_PATH}/users/refreshToken`, {
     method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
     credentials: "include",
   }).then((response) => response.json());
 }
@@ -74,6 +80,19 @@ export async function refreshToken() {
 export async function loginSuccess() {
   return await fetch(`${BASE_PATH}/users/login/success`, {
     method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  }).then((response) => response.json());
+}
+
+export async function logout() {
+  return await fetch(`${BASE_PATH}/users/logout`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     credentials: "include",
   }).then((response) => response.json());
 }
