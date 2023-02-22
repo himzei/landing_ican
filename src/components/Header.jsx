@@ -30,8 +30,12 @@ import { RiMessage2Fill } from "react-icons/ri";
 import { useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Link as LinkScroll } from "react-scroll";
+import useUser from "../lib/useUser";
+import { refreshToken } from "../api";
 
 export default function Header() {
+  const { userLoading, isLoggedIn, user } = useUser();
+  console.log(userLoading, isLoggedIn, user);
   const menuList = [
     { name: "업체소개", link: "test1", link2: "/#1" },
     { name: "서비스안내", link: "test2", link2: "/#2" },
@@ -41,6 +45,12 @@ export default function Header() {
   ];
   const [scroll, setScroll] = useState(true);
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      refreshToken();
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     document.addEventListener("wheel", (event) => {
@@ -54,6 +64,7 @@ export default function Header() {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
+
   return (
     <>
       <HStack
@@ -230,39 +241,7 @@ export default function Header() {
                   justifyContent="space-between"
                   h="full"
                 >
-                  <VStack>
-                    <Link to="/login">
-                      <HStack
-                        onClick={onClose}
-                        border="1px"
-                        borderColor="white"
-                        rounded="sm"
-                        py="2"
-                        px="4"
-                        w="200px"
-                        justifyContent={"space-between"}
-                      >
-                        <Text>로그인</Text>
-                        <AiOutlineLogin />
-                      </HStack>
-                    </Link>
-                    <Link to="/signup">
-                      <HStack
-                        onClick={onClose}
-                        border="1px"
-                        borderColor="white"
-                        rounded="sm"
-                        py="2"
-                        px="4"
-                        w="200px"
-                        justifyContent={"space-between"}
-                      >
-                        <Text>회원가입</Text>
-                        <FaRegAddressBook />
-                      </HStack>
-                    </Link>
-
-                    {/* 로그인 했을 때 메뉴 */}
+                  {isLoggedIn ? (
                     <VStack
                       w="200px"
                       p="4"
@@ -283,19 +262,55 @@ export default function Header() {
                             Hello~!
                           </Text>
                           <Text color="gray.300" fontSize="14" fontWeight={600}>
-                            himzei
+                            {user?.username || ""}
                           </Text>
                         </VStack>
                       </HStack>
 
                       <HStack spacing={4}>
                         <GoPerson color="gray" size="20" />
-                        <RiMessage2Fill color="gray" size="20" />
+                        <Link to="/chat">
+                          <RiMessage2Fill color="gray" size="20" />
+                        </Link>
                         <AiFillSetting color="gray" size="20" />
                         <AiOutlineLogout color="gray" size="20" />
                       </HStack>
                     </VStack>
-                  </VStack>
+                  ) : (
+                    <VStack>
+                      <Link to="/login">
+                        <HStack
+                          onClick={onClose}
+                          border="1px"
+                          borderColor="white"
+                          rounded="sm"
+                          py="2"
+                          px="4"
+                          w="200px"
+                          justifyContent={"space-between"}
+                        >
+                          <Text>로그인</Text>
+                          <AiOutlineLogin />
+                        </HStack>
+                      </Link>
+                      <Link to="/signup">
+                        <HStack
+                          onClick={onClose}
+                          border="1px"
+                          borderColor="white"
+                          rounded="sm"
+                          py="2"
+                          px="4"
+                          w="200px"
+                          justifyContent={"space-between"}
+                        >
+                          <Text>회원가입</Text>
+                          <FaRegAddressBook />
+                        </HStack>
+                      </Link>
+                    </VStack>
+                  )}
+
                   <VStack
                     display={{ sm: "none", lg: "block" }}
                     spacing={8}

@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import Chat from "./routes/Chat";
 import Home from "./routes/Home";
 import Login from "./routes/Login";
 import NotFound from "./routes/NotFound";
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: "signup",
     element: <Signup />,
+  },
+  {
+    path: "chat",
+    element: <Chat />,
   },
 ]);
 

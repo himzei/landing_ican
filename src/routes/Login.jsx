@@ -13,12 +13,13 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FaUser, FaLock } from "react-icons/fa";
 import { useMutation } from "react-query";
-import { Link, useLocation } from "react-router-dom";
-import { usernameLogin } from "../api";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { accessToken, refreshToken, usernameLogin } from "../api";
 
 import SocialLogin from "../components/SocialLogin";
 
 export default function Login() {
+  const navigate = useNavigate();
   const toast = useToast();
   const {
     reset,
@@ -37,10 +38,12 @@ export default function Login() {
         status: "success",
       });
       reset();
+      navigate("/");
     },
   });
 
   const onSubmit = ({ email, password }) => {
+    // console.log(email, password);
     mutation.mutate({ email, password });
   };
 
@@ -71,6 +74,14 @@ export default function Login() {
                 <Text color="red.500">회원가입</Text>
               </Link>
             </HStack>
+            <HStack>
+              <Button onClick={accessToken}>
+                <Text>access</Text>
+              </Button>
+              <Button onClick={refreshToken}>
+                <Text>refresh</Text>
+              </Button>
+            </HStack>
           </VStack>
         </Box>
 
@@ -97,6 +108,7 @@ export default function Login() {
               type="text"
               variant={"filled"}
               placeholder="이메일"
+              value="nadang@gmail.com"
             />
           </InputGroup>
           <InputGroup>

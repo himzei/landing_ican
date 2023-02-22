@@ -56,3 +56,24 @@ export async function usernameLogin({ email, password }) {
     }),
   }).then((response) => response.json());
 }
+
+export async function accessToken() {
+  return await fetch(`${BASE_PATH}/users/accessToken`, {
+    method: "GET",
+    credentials: "include",
+  }).then((response) => response.json());
+}
+
+export async function refreshToken() {
+  return await fetch(`${BASE_PATH}/users/refreshToken`, {
+    method: "GET",
+    credentials: "include",
+  }).then((response) => response.json());
+}
+
+export async function loginSuccess() {
+  return await fetch(`${BASE_PATH}/users/login/success`, {
+    method: "GET",
+    credentials: "include",
+  }).then((response) => response.json());
+}

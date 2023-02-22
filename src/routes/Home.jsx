@@ -7,20 +7,6 @@ import Service from "../components/home/Service";
 import { Element } from "react-scroll";
 
 export default function Home() {
-  const socket = new WebSocket(`ws://localhost:4000`);
-
-  socket.addEventListener("open", () => {
-    console.log("채팅이 연결되었습니다.");
-  });
-
-  socket.addEventListener("message", (message) => {
-    console.log("just got this: ", message.data, "from this server");
-  });
-
-  socket.addEventListener("close", () => {
-    console.log("접속종료");
-  });
-
   return (
     <>
       {/* 메인 슬라이드 */}

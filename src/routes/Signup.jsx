@@ -12,13 +12,14 @@ import {
 import { useEffect } from "react";
 import { FaUser, FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SocialLogin from "../components/SocialLogin";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { usernameSignUp } from "../api";
 
 export default function Signup() {
+  const navigate = useNavigate();
   const toast = useToast();
   const {
     handleSubmit,
@@ -34,6 +35,7 @@ export default function Signup() {
         status: "success",
       });
       reset();
+      navigate("/login");
     },
   });
 
