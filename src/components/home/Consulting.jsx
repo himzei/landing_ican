@@ -40,6 +40,7 @@ export default function Consulting() {
     register,
     reset,
     watch,
+    refetch,
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
@@ -72,6 +73,7 @@ export default function Consulting() {
         status: "success",
       });
       reset();
+      refetch();
     },
   });
 

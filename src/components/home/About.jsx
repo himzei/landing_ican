@@ -1,7 +1,13 @@
 import { Box, Grid, GridItem, HStack, Text, VStack } from "@chakra-ui/react";
 import ButtonSlide from "../ButtonSlide";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { useEffect } from "react";
 
 export default function About() {
+  useEffect(() => {
+    AOS.init();
+  });
   return (
     <HStack w="full" py="32" justifyContent={"center"}>
       <Grid
@@ -9,7 +15,12 @@ export default function About() {
         w="7xl"
         rowGap={{ sm: "16", lg: "0" }}
       >
-        <GridItem w="full" display={"flex"} justifyContent="center">
+        <GridItem
+          data-aos="fade-right"
+          w="full"
+          display={"flex"}
+          justifyContent="center"
+        >
           <VStack spacing={0}>
             <Text
               fontWeight={900}
@@ -22,7 +33,7 @@ export default function About() {
               backgroundSize={"cover"}
               backgroundClip={"text"}
             >
-              14
+              7
             </Text>
             <Text fontWeight={600} fontSize={20}>
               Years Of Experience With Creative Team
@@ -30,6 +41,7 @@ export default function About() {
           </VStack>
         </GridItem>
         <GridItem
+          data-aos="fade-left"
           h="full"
           display={"flex"}
           alignItems="center"

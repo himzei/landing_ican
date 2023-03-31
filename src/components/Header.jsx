@@ -36,7 +36,9 @@ import { logout, refreshToken } from "../api";
 
 export default function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const { userLoading, isLoggedIn, user } = useUser();
+
   console.log(userLoading, isLoggedIn, user);
   const menuList = [
     { name: "업체소개", link: "test1", link2: "/#1" },

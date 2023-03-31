@@ -15,11 +15,15 @@ import { AiFillPhone, AiTwotoneMail } from "react-icons/ai";
 import { BsFillPersonFill } from "react-icons/bs";
 import ListConsulting from "../components/profile/ListConsulting";
 import { useQuery } from "react-query";
-import { consultingList } from "../api";
+
 import { dateFormat, nameFormat } from "../lib/\bchangeFormat";
+import { consultingList } from "../api";
 
 export default function Profile() {
-  const { data, isLoading } = useQuery(["consulting"], consultingList);
+  const { data, isLoading } = useQuery(["12s"], consultingList, {
+    refetchInterval: 1000,
+  });
+
   console.log(isLoading, data);
   return (
     <VStack w="full" justifyContent={"center"} py="32" spacing="8">
